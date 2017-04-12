@@ -1,9 +1,14 @@
 package lambdademo;
 
+import java.util.ArrayList;
+import java.util.List;
+
 // Testing Lambda expressions.
 public class MyLambdaDemo {
 
 	public static void main(String[] args) {
+		List<Person> myPersonList = new ArrayList();
+		
 		// TODO Auto-generated method stub
 		System.out.println("Starting Lambda expression demo...");
 		
@@ -14,6 +19,8 @@ public class MyLambdaDemo {
 		// Runnable r2 = (String s) -> System.out.println(s);
 		
 		r1.run();
+		
+		// Create some person instances
 		
 	}
 

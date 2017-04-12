@@ -14,10 +14,14 @@ public class Person {
     String emailAddress;
     
     // Constructor
-    public Person (String name, String birthday, String gender, String email) {
+    public Person (String name, String birthday, char gender, String email) {
     	this.name = name;
-    	this.birthday 
- 
+    	this.birthday = LocalDate.parse(birthday);
+    	if (gender=='M')
+    		this.gender = Sex.MALE;
+    	else
+    		this.gender = Sex.FEMALE;
+    	this.emailAddress = email;
     }
 
     public int getAge() {
