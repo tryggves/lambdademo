@@ -2,6 +2,7 @@ package lambdademo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Predicate;
 
 // Testing Lambda expressions.
 public class MyLambdaDemo {
@@ -56,6 +57,16 @@ public class MyLambdaDemo {
 			(Person p) -> p.gender == Person.Sex.FEMALE && p.getAge() >= 18 && p.getAge() <= 70
 		);
 		
+		// Approach 6: Now, use the out of the box functional interfaces that is found in
+		// Java 8. See java.util.function package
+		System.out.println("\nAlternative 6:");
+		
+		// Note the lambda expression in second parameter is a boolean expression taking a
+		// Person as input parameter.
+		printPersonsWithPredicate(myPersonList, 
+			(Person p) -> p.gender == Person.Sex.FEMALE && p.getAge() >= 18 && p.getAge() <= 70
+		);
+		
 		/**
 		// Here is an example of a lambda expression that does not return anything.
 		Runnable r1 = () -> System.out.println("Hello world!");
@@ -100,6 +111,16 @@ public class MyLambdaDemo {
 		}
 	}
 	
+	// Alternative 6: Declare function and use out of the box fucntional interface; in this
+	// case Predicate (java.util.function) that has one abstract function test().
+	public static void printPersonsWithPredicate(List<Person> roster, Predicate<Person> tester) {
+		for (Person p : roster) {
+			if (tester.test(p)) {
+				p.printPerson();
+			}
+		}
+	}
+	
 }
 
 // Alternative 3: Cont'd
@@ -114,3 +135,5 @@ class CheckPersonEligibleForSelectiveService implements CheckPerson {
             p.getAge() <= 25;
     }
 }
+
+
