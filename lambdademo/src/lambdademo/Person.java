@@ -35,4 +35,8 @@ public class Person {
         // ...
     	System.out.println(name);
     }
+    
+    public void printAge () {
+    	System.out.println("Age: " + this.getAge() + ".");
+    }
 }

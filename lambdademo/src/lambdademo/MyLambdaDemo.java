@@ -2,6 +2,7 @@ package lambdademo;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 // Testing Lambda expressions.
@@ -67,11 +68,25 @@ public class MyLambdaDemo {
 			(Person p) -> p.gender == Person.Sex.FEMALE && p.getAge() >= 18 && p.getAge() <= 70
 		);
 		
+		// Approach 7: Taking lambda expressions to the next level by using functional interface
+		// for the filtering of the list as well as specifying the function to call for those
+		// elements that pass the filter.
+		System.out.println("\nAlternative 7:");
+		processPersons(myPersonList, 
+			p -> p.gender == Person.Sex.FEMALE && p.getAge() >= 18 && p.getAge() <= 70,
+			p -> p.printPerson());
+		
+		// This is the same approach but using another call to the Person class
+		processPersons(myPersonList, 
+				p -> p.gender == Person.Sex.FEMALE && p.getAge() >= 18 && p.getAge() <= 70,
+				p -> p.printAge());
+			
+		
 		/**
 		// Here is an example of a lambda expression that does not return anything.
 		Runnable r1 = () -> System.out.println("Hello world!");
 		
-		// This does not work...
+		// This does not work... Because the Runnable.run() function does not take a string parameter...
 		// Runnable r2 = (String s) -> System.out.println(s);
 		
 		r1.run();
@@ -119,6 +134,20 @@ public class MyLambdaDemo {
 				p.printPerson();
 			}
 		}
+	}
+	
+	// Alternative 7: Expand on alternative 6 by also specifying the action on persons
+	// passing the tester.test(p) predicate. This action is declared using the functional
+	// interface Consumer<T> which has one method void accept(T t) and produces no result.
+	public static void processPersons (List<Person> roster,
+			Predicate<Person> tester,
+			Consumer<Person> actOn) {
+		for (Person p : roster) {
+			if (tester.test(p)) {
+				actOn.accept (p);
+			}
+		}
+		
 	}
 	
 }
