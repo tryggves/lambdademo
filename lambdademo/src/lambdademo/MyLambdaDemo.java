@@ -35,7 +35,7 @@ public class MyLambdaDemo {
 		// Alternative 2. Print person with age in range 
 		printPersonsWithinAgeRange(myPersonList, 40, 50);
 		
-		// Alternative 3. Instantiate Class implementing test interfac, in this case it 
+		// Alternative 3. Instantiate Class implementing test interface, in this case it 
 		// is the class CheckPersonEligibleForSelectiveService that implements interface
 		// CheckPerson.
 		System.out.println("\nAlternative 3:");
