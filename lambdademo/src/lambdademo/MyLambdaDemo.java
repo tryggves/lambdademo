@@ -35,12 +35,15 @@ public class MyLambdaDemo {
 		// Alternative 2. Print person with age in range 
 		printPersonsWithinAgeRange(myPersonList, 40, 50);
 		
-		// Alternative 3. Instantiate Class implementing test interface
+		// Alternative 3. Instantiate Class implementing test interfac, in this case it 
+		// is the class CheckPersonEligibleForSelectiveService that implements interface
+		// CheckPerson.
 		System.out.println("\nAlternative 3:");
 		printPersons(
 			    myPersonList, new CheckPersonEligibleForSelectiveService());
 
 		// Approach 4: Specify Search Criteria Code in an Anonymous Class implementing test interface
+		// with name CheckPerson including the implementation of the test() function.
 		// This is done when calling the printPersons() function, hence the selection is given at 
 		// time of the call.
 		System.out.println("\nAlternative 4");
@@ -50,12 +53,30 @@ public class MyLambdaDemo {
 			}
 		});
 
+		/**
+		 * Lambda expression syntax:
+		 * 1) Parentheses with comma separated list of parameters. Parenthesis can be omitted if
+		 * there is only one parameter. Can also omit the type of the parameter...
+		 * 
+		 * 2) Body consisting of single expression or statement block.
+		 */
 		// Approach 5: Same as number 4 but using a lambda expression for this 
 		// functional interface (interface with one abstract function) makes the 
 		// code more readable and compact.
 		System.out.println("\nAlternative 5:");
 		printPersons(myPersonList,
 			(Person p) -> p.gender == Person.Sex.FEMALE && p.getAge() >= 18 && p.getAge() <= 70
+		);
+		
+		// Using return statement instead of expression in the body of the lambda statement.
+		// When using statements, you have to enclose the statement in curly braces
+		System.out.println("\nAlternative 5b:");
+		printPersons(myPersonList,
+			(Person p) -> {
+				return p.gender == Person.Sex.FEMALE 
+						&& p.getAge() >= 18 
+						&& p.getAge() <= 70;
+			}
 		);
 		
 		// Approach 6: Now, use the out of the box functional interfaces that is found in
@@ -98,8 +119,8 @@ public class MyLambdaDemo {
 	}
 
 	// Alternative 1: Very specific implementation 
-	public static void printPersonsOlderThan(List<Person> roster, int age) {
-	    for (Person p : roster) {
+	public static void printPersonsOlderThan(List<Person> personGroup, int age) {
+	    for (Person p : personGroup) {
 	        if (p.getAge() >= age) {
 	            p.printPerson();
 	        }
@@ -108,8 +129,8 @@ public class MyLambdaDemo {
 	
 	// Alternative 2; Somewhat more general implementation with age inside range
 	public static void printPersonsWithinAgeRange(
-		    List<Person> roster, int low, int high) {
-		    for (Person p : roster) {
+		    List<Person> personGroup, int low, int high) {
+		    for (Person p : personGroup) {
 		        if (low <= p.getAge() && p.getAge() < high) {
 		            p.printPerson();
 		        }
@@ -118,8 +139,8 @@ public class MyLambdaDemo {
 
 	// Alternative 3: Interface and a separate class implementing the interface.
 	// Lots of code.
-	public static void printPersons(List<Person> roster, CheckPerson tester) {
-		for (Person p : roster) {
+	public static void printPersons(List<Person> personGroup, CheckPerson tester) {
+		for (Person p : personGroup) {
 			if (tester.test(p)) {
 				p.printPerson();
 			}
@@ -128,8 +149,8 @@ public class MyLambdaDemo {
 	
 	// Alternative 6: Declare function and use out of the box fucntional interface; in this
 	// case Predicate (java.util.function) that has one abstract function test().
-	public static void printPersonsWithPredicate(List<Person> roster, Predicate<Person> tester) {
-		for (Person p : roster) {
+	public static void printPersonsWithPredicate(List<Person> personGroup, Predicate<Person> tester) {
+		for (Person p : personGroup) {
 			if (tester.test(p)) {
 				p.printPerson();
 			}
@@ -153,10 +174,15 @@ public class MyLambdaDemo {
 }
 
 // Alternative 3: Cont'd
+// This is an example of a ***functional*** interface. A functional interface is
+// an interface with only one function.
 interface CheckPerson {
     public boolean test(Person p);
 }
 
+// Alternative 3: Cont'd
+// This is the implementation class for the CheckPerson interface declared above
+// It is used in the alternative 3 method invokation from the main() function above.
 class CheckPersonEligibleForSelectiveService implements CheckPerson {
     public boolean test(Person p) {
         return p.gender == Person.Sex.MALE &&
